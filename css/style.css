@@ -1,0 +1,53 @@
+body {
+  text-align: center;
+  font-family: Arial, Helvetica, san-serif;
+  /*background: url(https://img.itch.io/aW1hZ2UvMzYzNTUvMTU4MzY5LmdpZg==/original/ZeSNDH.gif);*/
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+h1 {
+  text-align: center;
+
+}
+
+.squares {
+  max-width: 600px;
+  margin:0 auto;
+
+}
+.squares li {
+  width: 20%;
+  height: 100px;
+  float: left;
+  margin: 6px;
+  padding: 0;
+  border: 4px solid black;
+
+}
+li {
+  background: url(http://www.featurepics.com/FI/Thumb/20150204/Mole-Cartoon-3447573.jpg)
+}
+
+#message {
+  display: inline-block;
+  width: 20%;
+}
+span {
+  color: black;
+}
+
+button {
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  height: 100%;
+  font-weight: 700;
+  color: steelblue;
+  letter-spacing: 1px;
+  font-size: inherit;
+}
+button:hover{
+  color: white;
+  background: steelblue;
+}
