@@ -1,135 +1,165 @@
-$(function(){
-  $('li').one('click',function() {
-  console.log('Doink');
+function addEvent(element, event, delegate ) {
+  if(typeof (window.event) != 'undefined' && element.attachEvent) {
+    element.attachEvent('on' + event, delegate);
+  } else {
+    element.addEventListener(event, delegate, false);
+  }
+}
 
-  var lis = generateRandomSquares(12);
-  var squares =document.querySelectorAll(".square");
-  var pickedSquare = pickSquare();
-  var squareDisplay = document.getElementById("squareDisplay");
-  var messageDisplay =document.querySelector("#message");
-  var resetButton = document.querySelector("#reset");
+function Game(){
+  var game = document.querySelector("section#game");
+  var score = game.querySelector("section#game span.score");
+  var high_scores = game.querySelector("section#game ol.high-scores");
+  var time = game.querySelector("section#game span.time");
+  var start = game.querySelector("section#game span.start");
+  var interval, counter, count;
 
-  resetButton.addEventListener("click", function() {
-  lis = generateRandomSquares(12);
-  pickedSquare = pickSquare();
-  squareDisplay.textContent = pickedSquare;
-  for (var i =0; i < squares.length; i++) {
-    squares[i].style.background = lis[i];
+function Gem(Class, Value, MaxTTL) {
+  this.Class = Class;
+  this.Value = Value;
+  this.MaxTTL = MaxTTL;
+  }
+
+  var gems = [
+    new Gem('green', 10, 1.2),
+    new Gem('blue', 20, 1),
+    new Gem('red', 50, 0.75) ];
+
+function Click(event){
+  if(event.preventDefault) event.preventDefault();
+  if (event.stopPropagation) event.stopPropagation();
+  else event.cancelBubble = true;
+  var target = event.target || event.srcElement;
+  if(target.className.indexOf('gem') > -1){
+    var value = parseInt(target.getAttribute('data-value'));
+    var current = parseInt( score.innerHTML );
+    var audio = new Audio('');
+    audio.play();
+    score.innerHTML = current + value;
+    target.parentNode.removeChild(target);
+	   if (target.className.indexOf('red') > 0) endGame("BUSTED!!! - You Lose!");
+
+  }return false;}
+
+function Remove(id) {
+  var gem = game.querySelector("#" + id);
+  if(typeof(gem) != 'undefined')
+  gem.parentNode.removeChild(gem);
     }
+function Spawn() {
+  var index = Math.floor( ( Math.random() * 3 ) );
+  var gem = gems[index];
+  var id = Math.floor( ( Math.random() * 1000 ) + 1 );
+  var ttl = Math.floor( ( Math.random() * parseInt(gem.MaxTTL) * 1000 ) + 1000 );
+  var x = Math.floor( ( Math.random() * ( game.offsetWidth - 40 ) ) );
+  var y = Math.floor( ( Math.random() * ( game.offsetHeight -  44 ) ) );
+  var fragment = document.createElement('span');
+
+    fragment.id = "gem-" + id;
+    fragment.setAttribute('class', "gem " + gem.Class);
+    fragment.setAttribute('data-value', gem.Value);
+    game.appendChild(fragment);
+    fragment.style.left = x + "px";
+    fragment.style.top = y + "px";
+    setTimeout( function(){
+    Remove(fragment.id);
+  },
+    ttl);
   }
+function HighScores() {
+  if(typeof(Storage)!=="undefined"){
+    var scores = false;
+  if(localStorage["high-scores"]) {
+    high_scores.style.display = "block";
+    high_scores.innerHTML = '';
+    scores = JSON.parse(localStorage["high-scores"]);
+    scores = scores.sort(function(a,b){return parseInt(b)-parseInt(a)});
 
+      for(var i = 0; i < 10; i++){
+        var s = scores[i];
+        var fragment = document.createElement('li');
+        fragment.innerHTML = (typeof(s) != "undefined" ? s : "" );
+        high_scores.appendChild(fragment);
+                        }
+                    }
+                } else {
+                    high_scores.style.display = "none";
+                }
+            }
 
+function UpdateScore() {
+  if(typeof(Storage)!=="undefined"){
+    var current = parseInt(score.innerHTML);
+    var scores = false;
+    if(localStorage["high-scores"]) {
+      scores = JSON.parse(localStorage["high-scores"]);
+      scores = scores.sort(function(a,b){return parseInt(b)-parseInt(a)});
+    for(var i = 0; i < 10; i++){
+    var s = parseInt(scores[i]);
+    var val = (!isNaN(s) ? s : 0 );
+    if(current > val){
+    val = current;
+    scores.splice(i, 0, parseInt(current));
+    break;
+          }
+      }
+    scores.length = 10;
+    localStorage["high-scores"] = JSON.stringify(scores);
+                    } else {
+    var scores = new Array();
+    scores[0] = current;
+    localStorage["high-scores"] = JSON.stringify(scores);
+                          }
+                    HighScores();
+                }
+            }
 
- squareDisplay.textContent = pickedSquare;
+function Stop(interval) {
+                clearInterval(interval);
+            }
 
- for (var i = 0; i <squares.length;i++) {
-   squares.[i].style.background = lis[i];
+function endGame( msg ) {
+				count = 0;
+				Stop(interval);
+                Stop(counter);
+			    var left = document.querySelectorAll("section#game .gem");
+                for (var i = 0; i < left.length; i++) {
+					if(left[i] && left[i].parentNode) {
+						left[i].parentNode.removeChild(left[i]);
+                    }
+                }
+                time.innerHTML = msg || "Game Over!";
+                start.style.display = "block";
+                UpdateScore();
+			}
 
+function Start() {
+  score.innerHTML = "0";
+  start.style.display = "none";
+  interval = setInterval(Spawn, 750);
+  count = 10;
+  counter = null;
 
-   squares[i].addEventListener("click" ,function() {
-    //  click event added to grab the clicked square.
-    var clickedSquare = this.style.background;
-    console.log(clickedSquare, pickedSquare);
-    // compare the square to clickedSquare
-    if (clickedSquare === pickedSquare) {
-      messageDisplay.textContent="Correct";
-    }else{
-      alert("wrong");
-      messageDisplay.textContent="try again";
+function timer(){
+  count = count-1;
+  if (count <= 0){
+    endGame();
+    return;
+      } else {
+        time.innerHTML = count + "s left";
+        }
+      }
+  counter = setInterval(timer, 1200);
+  setTimeout( function(){
+  Stop(interval);
+  }, count * 1000);
   }
-});
-}
-});
-});
-function pickSquare() {
- var random = Math.floor(Math.random() * colors.length);
- return squares[random];
-}
-function generateRandomSquares(num){
-// make an array
-  var arr=[];
-// add number random squares to Array
-for(var i = 0; i < num; i++){
-  arr.push(randomSquare());
-}
-return arr;
-}
-function randomSquare(){
-  var lis = Math.floor(Math.random() * 16);
-  return "lis (" + 1 + "," + 2 + "," + 3 + "," + 4 + "," + 5 + "," + 6 +"," + 7 + "," + 8 + "," + 9 + "," + 10 + "," + 11 + "," + 12 + ")";
-}
-
-
-
-// SCORE BOARD
-var p1Button = document.querySelector("#p1");
-var p2Button = document.getElementById("p2");
-var resetButton = document.getElementById("reset");
-var p1Display = document.querySelector("#p1Display");
-var p2Display = document.querySelector("#p2Display");
-var numInput = document.querySelector("input");
-var winningScoreDisplay = document.querySelector("p span");
-var p1score = 0;
-var p2score = 0;
-var gameOver = false;
-var winningScore = 5;
-
-
-p1Button. addEventListener("click", function() {
-  if(!gameOver){
-    p1score++;
-    if(p1score === winningScore) {
-      p1Display.classList.add("winner");
-      gameOver= true;
+    addEvent(game, 'click', Click);
+    addEvent(start, 'click', Start);
     }
-    p1Display.textContent=p1score;
-  }
-});
+  addEvent(document, 'readystatechange', function() {
+    if ( document.readyState !== "complete" )
+          return true;
 
-p2Button. addEventListener("click", function() {
-  if(!gameOver){
-    p2score++;
-    if(p2score === winningScore) {
-      p2Display.classList.add("winner");
-      gameOver = true;
-    }
-    p2Display.textContent=p2score;
-  }
-});
-resetButton. addEventListener("click", function() {
-reset();
-});
-
-function reset(){
-  p1score = 0;
-  p2score = 0;
-  p1Display.textContent = 0;
-  p2Display.textContent = 0;
-  p1Display.classList.remove("winner");
-  p2Display.classList.remove("winner");
-  gameOver = false;
-
-}
-
-numInput. addEventListener("change" , function() {
-  winningScoreDisplay.textContent =(this.value);
-  winningScore = Number(this.value);
-});
-
-
-var lis = document.querySelectorAll("li");
-
-for(var i = 0; i < lis.length; i++) {
-lis[i].addEventListener("mouseover", function() {
-  this.classList.remove("selected");
-});
-lis[i].addEventListener("mouseout", function() {
-  this.classList.remove("selcted");
-});
-}
-lis[i].addEventListener("click", function() {
-  this.classList.toggle = ("done");
-});
-
-
-});
+            var game = new Game();
+        });
