@@ -4,13 +4,6 @@ body{
     font-family: sans-serif;
 }
 
-h1 {
-  margin: auto;
-  color: red;
-  text-transform: uppercase;
-  text-decoration-style: dotted;
-  text-align: center;
-}
 .header img {
   width: 350px;
   height: 250px;
@@ -22,6 +15,8 @@ h1 {
   position: relative;
   top: 18px;
   left: 10px;
+  color: red;
+  text-decoration: underline;
 }
 .wrapper {
     text-align: center;
@@ -30,6 +25,13 @@ h1 {
 .button {
     position: absolute;
     top: 50%;
+}
+.aside {
+  color: yellow;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-align: left;
+
 }
 #whacamole{
     position: relative;
@@ -78,7 +80,7 @@ h1 {
     background-color: transparent;
 }
 .active{
-    background:url('https://thumb1.shutterstock.com/display_pic_with_logo/437/437,1326887368,3/stock-vector-illustration-of-a-groundhog-wearing-glasses-93018529.jpg');!important;
+    background:url('http://img.gamen.com/@files/gamefile/2014/20141029/thum_1414553495.png');!important;
     background-size: cover;
 }
 .custom {

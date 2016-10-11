@@ -10,21 +10,21 @@ window.onload = function() {
         //the block height
     'container': 'stage',
         //the play area
-        'clock': 'clock',
+    'clock': 'clock',
         //the clock wrapper
-        'score': 'score',
+    'score': 'score',
         //the score wrapper
-        'play_btn': 'play',
+    'play_btn': 'play',
         //the play button
-        'stop_btn': 'stop',
+    'stop_btn': 'stop',
         //the stop button
-        'color': '#',
+    'color': '#',
         //the block color
-        'delay': 0,
+    'delay': 0,
         //the display dalay between block
-        'duration': 30,
+    'duration': 30,
         //the game duration in seconds
-        'padding': 2,
+    'padding': 2,
          //the space between blocs
     }).create();
 
@@ -228,6 +228,7 @@ whacAMole.prototype.randomize = function() {
         this.active = i;
     }
 };
+
 whacAMole.prototype.draw = function(max, pointer) {
     var active, next, dir, prop, dim;
     var c = 0;
