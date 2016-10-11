@@ -1,12 +1,16 @@
 window.onload = function() {
+  var adventureSounds=document.getElementById('adventureSounds');
+  var whackSounds=document.getElementById('whackSounds');
+  var missSounds=document.getElementById('missSounds');
+
   var s = new whacAMole({
     'rows': 4,
         //the number of rows in the game
     'cols': 7,
         //the number of cols in the game
-    'width': 51,
+    'width': 61,
         //the block width
-    'height': 51,
+    'height': 61,
         //the block height
     'container': 'stage',
         //the play area
@@ -102,6 +106,8 @@ whacAMole.prototype.create = function() {
             'padding': this.options.padding
         };
         this.draw(pointer.cols, pointer);
+
+
         return this;
     } else {
         window.alert('A container is required, Game cannot be played');
@@ -109,12 +115,14 @@ whacAMole.prototype.create = function() {
 };
 whacAMole.prototype.startUI = function() {
     this.wait = this.options.wfaclick_delay;
+
     var play = document.getElementById(this.options.play_btn) || null;
     var stop = document.getElementById(this.options.stop_btn) || null;
     var self = this;
     //Add score
     if (!this.scoreWrapper) {
         this.scoreWrapper = document.getElementById(this.options.score) || null;
+
     }
     if (this.scoreWrapper) {
         this.scoreWrapper.innerHTML = this.options.score_label;
@@ -134,6 +142,7 @@ whacAMole.prototype.startUI = function() {
             }
             self.updateClock();
             self.play();
+            adventureSounds.play();
         };
     }
     if (stop) {
@@ -153,6 +162,8 @@ whacAMole.prototype.updateClock = function() {
         self.nextwait = self.options.wfaclick_delay - d;
         if ((end - enlapsed) === 0) {
             self.stop();
+
+
             return;
         }
         self.clockWrapper.innerHTML = self.options.time_remain_label + (end - enlapsed) + ' s';
@@ -170,10 +181,13 @@ whacAMole.prototype.play = function() {
     this.score = 0;
     this.wait = this.options.wfaclick_delay;
     this.nextwait = this.wait;
+
     //Update UI and add attach event to the stage
     this.updateScore();
     this.container.onmousedown = function(ev) {
         self.waitAclick = window.clearTimeout(self.waitAclick);
+        whackSounds.play();
+
         ev = ev || window.event;
         var target = ev.target || ev.srcElement;
         if (target && target.className == 'active') {
@@ -186,6 +200,8 @@ whacAMole.prototype.play = function() {
         }, Math.random() * 500);
     };
     this.refresh();
+
+
 };
 whacAMole.prototype.stop = function() {
     //reset timeouts
@@ -195,11 +211,15 @@ whacAMole.prototype.stop = function() {
     this.waitAclick = null;
     //reset click wait and update the UI
     this.refresh();
+    missSounds.play();
+
+
     if (this.clockWrapper) {
         this.clockWrapper.innerHTML = this.options.time_remain_label + this.options.duration + ' s';
     }
     //Remove events
     this.container.onmousedown = null;
+
 };
 whacAMole.prototype.refresh = function() {
     var i;
@@ -213,7 +233,9 @@ whacAMole.prototype.refresh = function() {
     if (this.active !== -1) {
         this.waitAclick = window.setTimeout(function() {
             self.refresh();
+
         }, this.wait);
+
     }
 };
 whacAMole.prototype.randomize = function() {
@@ -226,6 +248,7 @@ whacAMole.prototype.randomize = function() {
         this.randomize();
     } else {
         this.active = i;
+
     }
 };
 
@@ -250,6 +273,7 @@ whacAMole.prototype.draw = function(max, pointer) {
         this.draw(pointer[next], pointer);
     }
     return this;
+
 };
 whacAMole.prototype.addElement = function(content, pos) {
     var scope = this;
