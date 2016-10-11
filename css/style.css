@@ -1,79 +1,86 @@
-body {
-      cursor: url(''),auto;
-      background: url('https://img.itch.io/aW1hZ2UvMzYzNjIvMTU4MzcwLmdpZg==/original/vaect1.gif');
-      background-repeat: no-repeat;
-      background-size: cover;
-        }
-
-
-section#game {
-            width: 500px;
-            height: 650px;
-            max-width: 80%;
-            max-height: 80%;
-            position: relative;
-            background-image: url('https://66.media.tumblr.com/3d152f471e21e695b643cdf5948abba5/tumblr_nzmh2cqhMV1rhfekio1_500.gif');
-            background-repeat: no-repeat;
-            background-size: cover;
-            color: red;
-            font-size: 30px;
-            font-family: "arial,sans-serif";
-            margin: auto;
-
-        }
-
-section#game .score{
-            display: block;
-            position: absolute;
-            top: 15px;
-            left: 15px;
-        }
-
-section#game .time{
-            display: block;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-        }
-
-section#game .start{
-            display: block;
-            padding-top: 40%;
-            margin: 0 auto 0 auto;
-            text-align: center;
-            width: 70%;
-            cursor: pointer;
-        }
-
-section#game .start .high-scores{
-            text-align: left;
-        }
-
-section#game .gem{
-            display: block;
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            cursor: pointer;
-        }
-
-section#game .gem.green{
-  background:url('https://katskivhittlkov.files.wordpress.com/2014/09/starnosed-molepc.jpg')
-  no-repeat ;
-  background-color: green;
-  background-size: cover;
-        }
-
-section#game .gem.blue{
-    background: url('https://katskivhittlkov.files.wordpress.com/2014/09/starnosed-molepc.jpg') no-repeat;
-		background-color: blue;
+body{
+    background: url('https://66.media.tumblr.com/3d152f471e21e695b643cdf5948abba5/tumblr_nzmh2cqhMV1rhfekio1_500.gif');
     background-size: cover;
+    font-family: sans-serif;
+}
 
-        }
+h1 {
+  margin: auto;
+  color: red;
+  text-transform: uppercase;
+  text-decoration-style: dotted;
+  text-align: center;
+}
+.header img {
+  width: 350px;
+  height: 250px;
+  margin: auto;
+  padding-left: 450px
+}
 
-section#game .gem.red{
-    background: url('https://mir-s3-cdn-cf.behance.net/projects/404/8b9ba326328903.555a0e936afd9.jpg') no-repeat;
-			background-color: red;
-      background-size: cover;
+.header h1 {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
+.wrapper {
+    text-align: center;
+}
 
-        }
+.button {
+    position: absolute;
+    top: 50%;
+}
+#whacamole{
+    position: relative;
+    margin: auto;
+    padding: 0;
+    border-bottom: 1px  #999;
+    cursor: pointer;
+    width: 394px;
+    height: 228px;
+}
+
+#stage{
+    position: relative;
+    margin: auto;
+    padding: 0;
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 480px;
+    height: 240px;
+    color: transparent;
+}
+
+#clock{
+    width: 394px;
+    height: 36px;
+    color: red;
+    line-height: 36px;
+    padding-left: 6px;
+    margin: auto;
+}
+
+#score{
+    width: 388px;
+    color: red;
+    line-height: 36px;
+    padding-left: 6px;
+    margin: auto;
+}
+#play,
+#stop{
+    width: 196px;
+    margin-top: 5px;
+    margin-right: 4px;
+    color: red;
+    margin: auto;
+    background-color: transparent;
+}
+.active{
+    background:url('https://thumb1.shutterstock.com/display_pic_with_logo/437/437,1326887368,3/stock-vector-illustration-of-a-groundhog-wearing-glasses-93018529.jpg');!important;
+    background-size: cover;
+}
+.custom {
+   cursor: url('http://www.pd4pic.com/images/park-wooden-cartoon-shapes-hammer-tool-shape.png'), auto;
+}
