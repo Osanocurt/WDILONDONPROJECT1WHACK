@@ -126,7 +126,7 @@ whacAMole.prototype.startUI = function() {
     if (this.clockWrapper) {
         this.clockWrapper.innerHTML = this.options.time_remain_label + this.options.duration + ' s';
     }
-    //Add buttons behaviors
+    // Add buttons behaviors
     if (play) {
         play.onclick = function() {
             if (self.running) {
