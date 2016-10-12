@@ -2,15 +2,14 @@ window.onload = function() {
   var adventureSounds=document.getElementById('adventureSounds');
   var whackSounds=document.getElementById('whackSounds');
   var missSounds=document.getElementById('missSounds');
-
   var s = new whacAMole({
     'rows': 4,
         //the number of rows in the game
     'cols': 7,
         //the number of cols in the game
-    'width': 61,
+    'width': 51,
         //the block width
-    'height': 61,
+    'height': 51,
         //the block height
     'container': 'stage',
         //the play area
@@ -63,6 +62,13 @@ if (this.initialize) {
     }
     return this;
 };
+/**
+ * Method: initialize
+ * Setup the object instance
+ *
+ *  opts          {Object}     the per-instance configuration object
+ *  WhacAMole     {object}     the class instance
+ **/
 whacAMole.prototype.initialize = function(opts) {
     this.setOptions(opts);
     if (this.options.difficulty < 1) {
@@ -74,7 +80,13 @@ whacAMole.prototype.initialize = function(opts) {
     this.options.difficulty = Number('0.' + this.options.difficulty);
     return this;
 };
-
+// **
+//  * Method: setOptions
+//  * Configure the options object
+//  *
+//  *  o {Object}    the instance configuration object
+//  *
+//  **/
 whacAMole.prototype.setOptions = function(o) {
     for (var v in o) {
         if (o[v]) {
@@ -82,12 +94,18 @@ whacAMole.prototype.setOptions = function(o) {
         }
     }
 };
+/**
+ *  Method: create
+ *  Prepare and draw the blocks
+ *
+ *   whacAMole {object}    the class instance
+ **/
 whacAMole.prototype.create = function() {
     if (this.container || this.options.container) {
-        this.container = document.getElementById(this.options.container) || document.body;
-        var rows = this.options.rows || this.rows;
-        var cols = this.options.cols || this.cols;
-        this.total = rows * cols;
+      this.container = document.getElementById(this.options.container) || document.body;
+      var rows = this.options.rows || this.rows;
+      var cols = this.options.cols || this.cols;
+      this.total = rows * cols;
 
         //Create draw pointer
         var pointer = {
@@ -113,6 +131,11 @@ whacAMole.prototype.create = function() {
         window.alert('A container is required, Game cannot be played');
     }
 };
+/**
+ *  Method: startUI
+ *  Enable the user interface and setup the user interaction behaviors
+ *
+ **/
 whacAMole.prototype.startUI = function() {
     this.wait = this.options.wfaclick_delay;
 
@@ -162,8 +185,6 @@ whacAMole.prototype.updateClock = function() {
         self.nextwait = self.options.wfaclick_delay - d;
         if ((end - enlapsed) === 0) {
             self.stop();
-
-
             return;
         }
         self.clockWrapper.innerHTML = self.options.time_remain_label + (end - enlapsed) + ' s';
@@ -182,7 +203,7 @@ whacAMole.prototype.play = function() {
     this.wait = this.options.wfaclick_delay;
     this.nextwait = this.wait;
 
-    //Update UI and add attach event to the stage
+    //Update UI and add some sound to the grids clicked
     this.updateScore();
     this.container.onmousedown = function(ev) {
         self.waitAclick = window.clearTimeout(self.waitAclick);
@@ -201,7 +222,6 @@ whacAMole.prototype.play = function() {
     };
     this.refresh();
 
-
 };
 whacAMole.prototype.stop = function() {
     //reset timeouts
@@ -209,7 +229,7 @@ whacAMole.prototype.stop = function() {
     this.running = null;
     this.waitAclick = window.clearTimeout(this.waitAclick);
     this.waitAclick = null;
-    //reset click wait and update the UI
+    //stop button to reset the game, timer and score.
     this.refresh();
     missSounds.play();
 
@@ -238,6 +258,12 @@ whacAMole.prototype.refresh = function() {
 
     }
 };
+/**
+ * Method: randomize
+ * Generate a (pseudo) random number between 0 and total blocks
+ * If the game is not running active block is set to -1
+ *
+ **/
 whacAMole.prototype.randomize = function() {
     if (!this.running) {
         this.active = -1;
@@ -251,7 +277,14 @@ whacAMole.prototype.randomize = function() {
 
     }
 };
-
+/**
+ * Method: draw
+ * Draw the  elements
+ *
+ *  max           {Number}    the numer of iterations
+ *  pointer       {object}    the main pointer object
+ *  WhacAMole     {Object}    the class instance
+ **/
 whacAMole.prototype.draw = function(max, pointer) {
     var active, next, dir, prop, dim;
     var c = 0;
@@ -273,8 +306,16 @@ whacAMole.prototype.draw = function(max, pointer) {
         this.draw(pointer[next], pointer);
     }
     return this;
-
 };
+
+/**
+ * Method: addElement
+ * Prepare a div element instance to be injected into the container object
+ *
+ *  content   {String}    the element content
+ *  pos       {Object}    an object with the css properties for the element
+ *  void
+ **/
 whacAMole.prototype.addElement = function(content, pos) {
     var scope = this;
     var id = pos.count;
@@ -304,6 +345,13 @@ whacAMole.prototype.addElement = function(content, pos) {
     }, pos.delay);
 };
 
+ //
+ // * Method: setElementStyle
+ // * Parse and set the css properties to the passed DOM object
+ // *
+ // *  {HTMLObject}    the DOM element
+ // *  s {Object}        the style object
+ // */
 whacAMole.prototype.setElementStyle = function(e, s) {
     if (!e || !s) {
         return;

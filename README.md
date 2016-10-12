@@ -1,7 +1,7 @@
 # WDILONDONPROJECT1WHACK
 Old childhood game called Whack A Mole.
 This was my first ever attempt at such a task.
-It was very exciting prospect that sounded so simple to do at first, the planning side of it was really exciting with all osrts of ideas floating around.
+It was very exciting prospect that sounded so simple to do at first, the planning side of it was really exciting with all sorts of ideas floating around in my mind.
 There was a brief on what your game should include, certain techniques that we have been taught since the begining of the course.
 It all started on a piece of paper with lots of drawings and ideas that seemed simple but when it came to implementing them it wasnt so simple.
 The idea was simple enough to have a grid based game as thats what we have covered so far in  class. At first i was thing of a collision based game but then i was glad i did not attempt that just yet.
