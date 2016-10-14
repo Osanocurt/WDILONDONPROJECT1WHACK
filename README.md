@@ -24,9 +24,6 @@ First hurdle was how to go about generating the random function for my board. Th
 All in all i would say the brief for this project was met and there is a fully functional game that can be enjoyed online with out any issues arrising. 
 
 
-
-# ![](https://ga-dash.s3.amazonaws.com/production/assets/logo-9f88ae6c9c3871690e33280fcf557f33.png) Project #1: The Game
-
 ### Overview
 
 Let's start out with something fun - **a game!**
