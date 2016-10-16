@@ -47,9 +47,12 @@ The second hurdle was to create a way on how someone won the game so basically h
 All in all i would say the brief for this project was met and there is a fully functional game that can be enjoyed online with out any issues arrising. 
 
 
+<<<<<<< HEAD
 
 Project #1: The Game
 
+=======
+>>>>>>> 78c49331e8f68377a6971b09c12b0a8768adeab5
 ### Overview
 
 Let's start out with something fun - **a game!**
