@@ -30,7 +30,6 @@ window.onload = function() {
     'padding': 2,
          //the space between blocs
     }).create();
-
 };
 var whacAMole = function whacAMole(conf) {
   this.rows = 6;
@@ -344,7 +343,6 @@ whacAMole.prototype.addElement = function(content, pos) {
         }
     }, pos.delay);
 };
-
  //
  // * Method: setElementStyle
  // * Parse and set the css properties to the passed DOM object
