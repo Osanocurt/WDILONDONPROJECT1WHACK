@@ -4,7 +4,6 @@
  * Start a "Whac a Mole" like simple game over on them
  *
  * @param conf {Object} the per-instance configuration object
- * @version 1.0
  * @use
  *      var conf={
  *          'rows': 4,                  //the number of rows
