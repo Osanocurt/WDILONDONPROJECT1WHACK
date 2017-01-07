@@ -1,43 +1,19 @@
 body{
-    background: url('https://66.media.tumblr.com/3d152f471e21e695b643cdf5948abba5/tumblr_nzmh2cqhMV1rhfekio1_500.gif');
-    background-size: cover;
+    background-color: #steelblue;
     font-family: sans-serif;
+    margin-left: 450px;
+    margin-bottom: 100px;
+    text-align: justify;
 }
 
-.header img {
-  width: 380px;
-  height: 250px;
-  margin: auto;
-  padding-left: 450px
-}
-
-.header h1 {
-  position: relative;
-  top: 18px;
-  left: 10px;
-  color: red;
-  text-decoration: underline;
-}
-.wrapper {
-    text-align: center;
-}
-
-.button {
-    position: absolute;
-    top: 50%;
-}
-.aside {
-  color: yellow;
-  margin-bottom: 10px;
-  text-decoration: underline;
-  text-align: left;
-
-}
-#whacamole{
+#whacamoo{
     position: relative;
-    margin: auto;
+    background-color: #fff;
+    margin: 0;
     padding: 0;
-    border-bottom: 1px  #999;
+    border: 1px solid #ccc;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #999;
     cursor: pointer;
     width: 394px;
     height: 228px;
@@ -45,44 +21,44 @@ body{
 
 #stage{
     position: relative;
-    margin: auto;
+    margin: 0;
     padding: 0;
     margin-top: 4px;
     margin-left: 4px;
     width: 480px;
     height: 240px;
-    color: transparent;
 }
 
 #clock{
-    width: 394px;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    width: 388px;
     height: 36px;
-    color: red;
+    color: #999;
     line-height: 36px;
     padding-left: 6px;
-    margin: auto;
 }
 
 #score{
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-top: 1px solid #fff;
     width: 388px;
-    color: red;
+    height: 36px;
+    color: #666;
     line-height: 36px;
     padding-left: 6px;
-    margin: auto;
 }
 #play,
 #stop{
     width: 196px;
+    height: 24px;
+    left: 480px;
     margin-top: 5px;
     margin-right: 4px;
-    color: red;
-    margin: auto;
-    background-color: transparent;
+    color: #333;
 }
 .active{
-    background:url('http://img00.deviantart.net/b09a/i/2012/264/5/3/realistic_diglett_by_lanceofdragon-d5ffhy7.jpg');!important;
-    background-size: cover;
-}
-.custom {
-   cursor: url('http://www.pd4pic.com/images/park-wooden-cartoon-shapes-hammer-tool-shape.png'), auto;
+    background-color: #090!important;
 }

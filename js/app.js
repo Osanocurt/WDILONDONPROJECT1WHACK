@@ -1,74 +1,68 @@
-window.onload = function() {
-  var adventureSounds=document.getElementById('adventureSounds');
-  var whackSounds=document.getElementById('whackSounds');
-  var missSounds=document.getElementById('missSounds');
-  var s = new whacAMole({
-    'rows': 4,
-        //the number of rows in the game
-    'cols': 7,
-        //the number of cols in the game
-    'width': 51,
-        //the block width
-    'height': 51,
-        //the block height
-    'container': 'stage',
-        //the play area
-    'clock': 'clock',
-        //the clock wrapper
-    'score': 'score',
-        //the score wrapper
-    'play_btn': 'play',
-        //the play button
-    'stop_btn': 'stop',
-        //the stop button
-    'color': '#',
-        //the block color
-    'delay': 0,
-        //the display dalay between block
-    'duration': 30,
-        //the game duration in seconds
-    'padding': 2,
-         //the space between blocs
-    }).create();
-};
-var whacAMole = function whacAMole(conf) {
-  this.rows = 6;
-  this.cols = 6;
-  this.total = 0;
-  this.elements = [];
-  this.score = 0;
-  this.scoreWrapper = null;
-  this.clockWrapper = null;
-  this.running = null;
-  this.waitAclick = null;
-  this.options = {
-    'delay': 0,
-    'width': 40,
-    'height': 40,
-    'padding': 1,
-    'score_label': 'Score: ',
-    'duration': 30,
-    'time_remain_label': 'Time Remaining: ',
-    'wfaclick_delay': 1400
+/**
+ * CLASS: WhacAMoo ....a simple game implemantation!
+ * Creates an spiral of elements in a clockwise
+ * Start a "Whac a Mole" like simple game over on them
+ *
+ * @param conf {Object} the per-instance configuration object
+ * @version 1.0
+ * @use
+ *      var conf={
+ *          'rows': 4,                  //the number of rows
+ *          'cols': 7,                  //the number of columns
+ *          'width': 51,                //the element width
+ *          'height': 51,               //the element height
+ *          'container':'stage',        //the play area
+ *          'clock':'clock',            //the clock wrapper
+ *          'score':'score',            //the score wrapper
+ *          'play_btn':'play',          //the play button
+ *          'stop_btn':'stop',          //the stop button
+ *          'color':'#cccccc',          //the block color
+ *          'delay':10,                 //the wait between displaying each element in milliseconds
+ *          'duration': 10,             //the game duration in seconds
+ *          'padding': 2                //the space between blocs
+ *      }
+ *      var s=new WhacAMoo(conf).create();
+ *
+ *
+ **/
+var WhacAMoo = function WhacAMoo(conf) {
+    this.rows = 6;
+    this.cols = 6;
+    this.total = 0;
+    this.elements = [];
+    this.score = 0;
+    this.scoreWrapper = null;
+    this.clockWrapper = null;
+    this.running = null;
+    this.waitAclick = null;
+    this.options = {
+        'delay': 0,
+        'width': 36,
+        'height': 36,
+        'padding': 1,
+        'score_label': 'Score: ',
+        'duration': 30,
+        'time_remain_label': 'Remaining: ',
+        'wfaclick_delay': 1400
     };
-  this.active = 0;
-  this.wait = 0;
-  this.nextwait = 0;
-  this.container = null;
-if (this.initialize) {
-    this.initialize.apply(this, arguments);
-
+    this.active = 0;
+    this.wait = 0;
+    this.nextwait = 0;
+    this.container = null;
+    if (this.initialize) {
+        this.initialize.apply(this, arguments);
     }
     return this;
 };
+
 /**
  * Method: initialize
  * Setup the object instance
  *
- *  opts          {Object}     the per-instance configuration object
- *  WhacAMole     {object}     the class instance
+ * @param opts          {Object}     the per-instance configuration object
+ * @return WhacAMoo     {object}     the class instance
  **/
-whacAMole.prototype.initialize = function(opts) {
+WhacAMoo.prototype.initialize = function(opts) {
     this.setOptions(opts);
     if (this.options.difficulty < 1) {
         this.options.difficulty = 1;
@@ -79,32 +73,34 @@ whacAMole.prototype.initialize = function(opts) {
     this.options.difficulty = Number('0.' + this.options.difficulty);
     return this;
 };
-// **
-//  * Method: setOptions
-//  * Configure the options object
-//  *
-//  *  o {Object}    the instance configuration object
-//  *
-//  **/
-whacAMole.prototype.setOptions = function(o) {
+
+/**
+ * Method: setOptions
+ * Configure the options object
+ *
+ * @param o {Object}    the instance configuration object
+ * @return void
+ **/
+WhacAMoo.prototype.setOptions = function(o) {
     for (var v in o) {
         if (o[v]) {
             this.options[v] = o[v];
         }
     }
 };
+
 /**
  *  Method: create
  *  Prepare and draw the blocks
  *
- *   whacAMole {object}    the class instance
+ *  @return WhacAMoo {object}    the class instance
  **/
-whacAMole.prototype.create = function() {
+WhacAMoo.prototype.create = function() {
     if (this.container || this.options.container) {
-      this.container = document.getElementById(this.options.container) || document.body;
-      var rows = this.options.rows || this.rows;
-      var cols = this.options.cols || this.cols;
-      this.total = rows * cols;
+        this.container = document.getElementById(this.options.container) || document.body;
+        var rows = this.options.rows || this.rows;
+        var cols = this.options.cols || this.cols;
+        this.total = rows * cols;
 
         //Create draw pointer
         var pointer = {
@@ -123,28 +119,27 @@ whacAMole.prototype.create = function() {
             'padding': this.options.padding
         };
         this.draw(pointer.cols, pointer);
-
-
         return this;
     } else {
-        window.alert('A container is required, Game cannot be played');
+        window.alert('A container is required..."Whac a Moo" can\'t be created!');
     }
 };
+
 /**
  *  Method: startUI
  *  Enable the user interface and setup the user interaction behaviors
  *
+ *  @return void
+ *
  **/
-whacAMole.prototype.startUI = function() {
+WhacAMoo.prototype.startUI = function() {
     this.wait = this.options.wfaclick_delay;
-
     var play = document.getElementById(this.options.play_btn) || null;
     var stop = document.getElementById(this.options.stop_btn) || null;
     var self = this;
     //Add score
     if (!this.scoreWrapper) {
         this.scoreWrapper = document.getElementById(this.options.score) || null;
-
     }
     if (this.scoreWrapper) {
         this.scoreWrapper.innerHTML = this.options.score_label;
@@ -156,7 +151,7 @@ whacAMole.prototype.startUI = function() {
     if (this.clockWrapper) {
         this.clockWrapper.innerHTML = this.options.time_remain_label + this.options.duration + ' s';
     }
-    // Add buttons behaviors
+    //Add buttons behaviors
     if (play) {
         play.onclick = function() {
             if (self.running) {
@@ -164,7 +159,6 @@ whacAMole.prototype.startUI = function() {
             }
             self.updateClock();
             self.play();
-            adventureSounds.play();
         };
     }
     if (stop) {
@@ -172,12 +166,21 @@ whacAMole.prototype.startUI = function() {
             self.stop();
         };
     }
+
 };
-//Update clock and game function
-whacAMole.prototype.updateClock = function() {
+
+/**
+ * Method: updateClock
+ * Start or reset the game clock
+ *
+ * @return void
+ *
+ **/
+WhacAMoo.prototype.updateClock = function() {
     var self = this;
     var enlapsed = 1;
     var end = this.options.duration;
+    //Update clock and game function
     this.running = window.setInterval(function() {
         var p = (enlapsed / end) * 100;
         var d = Math.round((enlapsed / end) * (self.options.wfaclick_delay * 0.4));
@@ -191,23 +194,35 @@ whacAMole.prototype.updateClock = function() {
     }, 1000);
 
 };
-whacAMole.prototype.updateScore = function() {
+
+/**
+ * Method: updateScore
+ * Update the user score
+ *
+ * @return void
+ **/
+WhacAMoo.prototype.updateScore = function() {
     if (this.scoreWrapper) {
         this.scoreWrapper.innerHTML = this.options.score_label + this.score;
     }
 };
-whacAMole.prototype.play = function() {
+
+/**
+ * method: play
+ * Start the game and set the stage behaviors
+ *
+ * @return void
+ *
+ **/
+WhacAMoo.prototype.play = function() {
     var self = this;
     this.score = 0;
     this.wait = this.options.wfaclick_delay;
     this.nextwait = this.wait;
-
-    //Update UI and add some sound to the grids clicked
+    //Update UI and add attach event to the stage
     this.updateScore();
     this.container.onmousedown = function(ev) {
         self.waitAclick = window.clearTimeout(self.waitAclick);
-        whackSounds.play();
-
         ev = ev || window.event;
         var target = ev.target || ev.srcElement;
         if (target && target.className == 'active') {
@@ -220,27 +235,36 @@ whacAMole.prototype.play = function() {
         }, Math.random() * 500);
     };
     this.refresh();
-
 };
-whacAMole.prototype.stop = function() {
+
+/**
+ * Method: stop
+ * Stop the game and reset the user interface and the behaviors
+ *
+ * @return void
+ **/
+WhacAMoo.prototype.stop = function() {
     //reset timeouts
     this.running = window.clearInterval(this.running);
     this.running = null;
     this.waitAclick = window.clearTimeout(this.waitAclick);
     this.waitAclick = null;
-    //stop button to reset the game, timer and score.
+    //reset click wait and update the UI
     this.refresh();
-    missSounds.play();
-
-
     if (this.clockWrapper) {
         this.clockWrapper.innerHTML = this.options.time_remain_label + this.options.duration + ' s';
     }
     //Remove events
     this.container.onmousedown = null;
-
 };
-whacAMole.prototype.refresh = function() {
+
+/**
+ * Method: refresh
+ * Update the game
+ *
+ * @return void
+ **/
+WhacAMoo.prototype.refresh = function() {
     var i;
     var self = this;
     this.randomize();
@@ -252,18 +276,18 @@ whacAMole.prototype.refresh = function() {
     if (this.active !== -1) {
         this.waitAclick = window.setTimeout(function() {
             self.refresh();
-
         }, this.wait);
-
     }
 };
+
 /**
  * Method: randomize
  * Generate a (pseudo) random number between 0 and total blocks
  * If the game is not running active block is set to -1
  *
+ * @return void;
  **/
-whacAMole.prototype.randomize = function() {
+WhacAMoo.prototype.randomize = function() {
     if (!this.running) {
         this.active = -1;
         return;
@@ -273,21 +297,21 @@ whacAMole.prototype.randomize = function() {
         this.randomize();
     } else {
         this.active = i;
-
     }
 };
+
 /**
  * Method: draw
- * Draw the  elements
+ * Draw the spiral of elements
  *
- *  max           {Number}    the numer of iterations
- *  pointer       {object}    the main pointer object
- *  WhacAMole     {Object}    the class instance
+ * @param max           {Number}    the numer of iterations
+ * @param pointer       {object}    the main pointer object
+ * @return WhacAMoo     {Object}    the class instance
  **/
-whacAMole.prototype.draw = function(max, pointer) {
+WhacAMoo.prototype.draw = function(max, pointer) {
     var active, next, dir, prop, dim;
     var c = 0;
-    active = (pointer.dir % 2 === 0) ? 'cols' : 'rows';
+    active = (pointer.dir % 2 == 0) ? 'cols' : 'rows';
     next = (pointer.dir % 2 > 0) ? 'cols' : 'rows';
     dir = (pointer.dir < 2) ? 1 : -1;
     prop = (pointer.dir % 2 > 0) ? 'y' : 'x';
@@ -311,11 +335,11 @@ whacAMole.prototype.draw = function(max, pointer) {
  * Method: addElement
  * Prepare a div element instance to be injected into the container object
  *
- *  content   {String}    the element content
- *  pos       {Object}    an object with the css properties for the element
- *  void
+ * @param content   {String}    the element content
+ * @param pos       {Object}    an object with the css properties for the element
+ * @return void
  **/
-whacAMole.prototype.addElement = function(content, pos) {
+WhacAMoo.prototype.addElement = function(content, pos) {
     var scope = this;
     var id = pos.count;
     var eStyle = {
@@ -343,14 +367,15 @@ whacAMole.prototype.addElement = function(content, pos) {
         }
     }, pos.delay);
 };
- //
- // * Method: setElementStyle
- // * Parse and set the css properties to the passed DOM object
- // *
- // *  {HTMLObject}    the DOM element
- // *  s {Object}        the style object
- // */
-whacAMole.prototype.setElementStyle = function(e, s) {
+
+/**
+ * Method: setElementStyle
+ * Parse and set the css properties to the passed DOM object
+ *
+ * @param e {HTMLObject}    the DOM element
+ * @param s {Object}        the style object
+ */
+WhacAMoo.prototype.setElementStyle = function(e, s) {
     if (!e || !s) {
         return;
     }
@@ -362,4 +387,37 @@ whacAMole.prototype.setElementStyle = function(e, s) {
         prop = (m) ? p.replace(r, m[2].toUpperCase()) : p;
         e.style[prop] = s[p];
     }
+};
+
+
+/*----------STARTUP-----------*/
+window.onload = function() {
+    var s = new WhacAMoo({
+        'rows': 4,
+        //the number of rows in the game
+        'cols': 7,
+        //the number of cols in the game
+        'width': 51,
+        //the block width
+        'height': 51,
+        //the block height
+        'container': 'stage',
+        //the play area
+        'clock': 'clock',
+        //the clock wrapper
+        'score': 'score',
+        //the score wrapper
+        'play_btn': 'play',
+        //the play button
+        'stop_btn': 'stop',
+        //the stop button
+        'color': '#cccccc',
+        //the block color
+        'delay': 0,
+        //the display dalay between block
+        'duration': 30,
+        //the game duration in seconds
+        'padding': 2 //the space between blocs
+    }).create();
+
 };
