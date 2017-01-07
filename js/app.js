@@ -410,7 +410,7 @@ window.onload = function() {
         //the play button
         'stop_btn': 'stop',
         //the stop button
-        'color': '#cccccc',
+        'color': 'white',
         //the block color
         'delay': 0,
         //the display dalay between block
